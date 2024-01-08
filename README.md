@@ -36,3 +36,14 @@ Outputs metrics about the execution real time of the ruby versions...
 ```shell
 ./average_execution
 ```
+
+### calculate_average.rb
+
+The main script. This is where the solution goes!
+
+```shell
+ruby calculate_average.rb
+# Kolkata - min: 26.7, max: 36.7, avg: 31.690693763139457
+# Guadalajara - min: 20.9, max: 30.9, avg: 25.91096780180013
+# ...
+```
