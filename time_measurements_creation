@@ -1,0 +1,32 @@
+#! /bin/bash
+
+measurements=$1
+measurements_script=$2
+
+# ruby 3.2.2
+asdf local ruby 3.2.2
+
+ruby -v
+
+RVERSION=$(ruby -v | cut -d ' ' -f 2)
+
+for iteration in {1..5}
+do
+  /usr/bin/time -o time_"$RVERSION"_$iteration.txt ruby $measurements_script $measurements
+done
+
+ruby -v --jit
+for iteration in {1..5}
+do
+  /usr/bin/time -o "time_"$RVERSION"jit_$iteration.txt" ruby --jit $measurements_script $measurements
+done
+
+# Ruby 3.3.0
+asdf local ruby 3.3.0
+
+ruby -v
+RVERSION=$(ruby -v | cut -d ' ' -f 2)
+for iteration in {1..5}
+do
+  /usr/bin/time -o "time_"$RVERSION"_$iteration.txt" ruby $measurements_script $measurements
+done

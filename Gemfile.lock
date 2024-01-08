@@ -1,0 +1,13 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ruby-prof (1.7.0)
+
+PLATFORMS
+  arm64-darwin-22
+
+DEPENDENCIES
+  ruby-prof (~> 1.7)
+
+BUNDLED WITH
+   2.4.20

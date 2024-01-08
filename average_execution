@@ -1,0 +1,37 @@
+#! /usr/bin/env ruby
+
+time_file_names = Dir['time_*.txt']
+  .collect { |f| f.split('_') }
+  .group_by { |f| f[1] } # group by ruby version
+
+versions = time_file_names.keys
+
+puts "Found (#{versions.size}) ruby versions: #{versions.join(', ')}"
+puts
+
+versions.each do |version|
+  puts "Ruby #{version} execution metrics:"
+
+  executions = []
+  min = 0
+  max = 0
+  avg = 0
+
+  time_file_names[version].each do |filename|
+    file = File.open(filename.join('_'), 'r')
+
+    executions.push file.read.split('real')[0].to_f
+    executions.sort!
+
+    min = executions.first
+    max = executions.last
+    avg = executions[1..-1].sum / (executions[1..-1].size.to_f)
+  end
+
+  puts "min = #{min}, max = #{max}, avg = #{avg}"
+  puts
+end
+
+measurement_lines = `wc -l measurements.txt`.split(' ')[0]
+
+puts "while producing #{measurement_lines} lines!"
