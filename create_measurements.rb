@@ -4,7 +4,11 @@ require_relative './stations/stations'
 
 MEASUREMENTS_FILE_NAME = 'measurements.txt'
 
-iterations = ARGV.first.to_i
+begin
+  iterations = Integer ARGV.first
+rescue
+  abort "Usage: #$0 <INT>"
+end
 
 measurements_file = File.open(MEASUREMENTS_FILE_NAME, 'w')
 
