@@ -1,23 +1,20 @@
 # https://stackoverflow.com/questions/16159370/ruby-hash-default-value-behavior
 
-measurements_file = File.open('measurements.txt', 'r')
-
 stations = Hash.new {|hsh, key| hsh[key] = [] }
 
-measurements_file.each do |line|
+STDIN.each_line do |line|
   location, temperature = line.chomp.split(';')
 
   stations[location] << temperature.to_f
 end
 
-stations.each do |station, measurements|
-  puts "#{station} - min: #{measurements.first}, max: #{measurements.first}, avg: #{measurements.first}" if measurements.size == 1 && next
+stations_aggregated = stations.transform_values do |measurements|
+  min, max = measurements.minmax
+  avg = measurements.sum / measurements.size
 
-  measurements.sort!
+  [min, avg, max]
+end
 
-  min = measurements.first
-  max = measurements.last
-  avg = measurements.sum(0.0) / measurements.size
-
-  puts "#{station} - min: #{min}, max: #{max}, avg: #{avg}"
+stations_aggregated.sort.map do |station, (min, avg, max)|
+  puts format('%s=%.1f/%.1f/%.1f', station, min, avg, max)
 end
