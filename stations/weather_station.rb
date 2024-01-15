@@ -1,5 +1,3 @@
-require 'securerandom'
-
 class WeatherStation
   attr_reader :location, :mean_temperature
 
@@ -12,7 +10,7 @@ class WeatherStation
 
   # random gaussian
   def measurement
-    (SecureRandom.random_number * STANDARD_DEVIATION + mean_temperature).round(1)
+    (Random.rand * STANDARD_DEVIATION + mean_temperature).round(1)
   end
 end
 
