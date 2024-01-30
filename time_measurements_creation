@@ -12,13 +12,13 @@ RVERSION=$(ruby -v | cut -d ' ' -f 2)
 
 for iteration in {1..5}
 do
-  /usr/bin/time -o time_"$RVERSION"_$iteration.txt ruby $measurements_script $measurements
+  /usr/bin/time -o time_"$RVERSION"_$iteration.txt ruby $measurements_script < $measurements > /dev/null
 done
 
 ruby -v --jit
 for iteration in {1..5}
 do
-  /usr/bin/time -o "time_"$RVERSION"jit_$iteration.txt" ruby --jit $measurements_script $measurements
+  /usr/bin/time -o "time_"$RVERSION"jit_$iteration.txt" ruby --jit $measurements_script < $measurements > /dev/null
 done
 
 # Ruby 3.3.0
@@ -28,5 +28,5 @@ ruby -v
 RVERSION=$(ruby -v | cut -d ' ' -f 2)
 for iteration in {1..5}
 do
-  /usr/bin/time -o "time_"$RVERSION"_$iteration.txt" ruby $measurements_script $measurements
+  /usr/bin/time -o "time_"$RVERSION"_$iteration.txt" ruby $measurements_script < $measurements > /dev/null
 done
